@@ -3,15 +3,13 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
-	"image/color"
+	"fyne.io/fyne/v2/theme"
 	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/driver/desktop"
@@ -70,50 +68,15 @@ func main() {
 	))
 	w.SetMaster()
 
-	clock := widget.NewLabel("")
-	w.SetContent(clock)
-	formatted := time.Now().Format("Time: 03:04:05")
-	clock.SetText(formatted)
-
+	w.SetCloseIntercept(func() {
+		w.Hide()
+	})
 	if desk, ok := a.(desktop.App); ok {
 		m := fyne.NewMenu("MyApp",
 			fyne.NewMenuItem("Show", func() {
 				w.Show()
 			}))
 		desk.SetSystemTrayMenu(m)
-	}
-	w.SetCloseIntercept(func() {
-		w.Hide()
-	})
-	hello := widget.NewLabel("Hello Fyne 中文!")
-
-	green := color.NRGBA{R: 0, G: 180, B: 0, A: 255}
-
-	text1 := canvas.NewText("Hello", green)
-	text2 := canvas.NewText("There", green)
-	text2.Move(fyne.NewPos(20, 20))
-	content := container.NewHBox(text1, text2)
-
-	md := widget.NewRichTextFromMarkdown(`
-# RichText Heading
-
-## A Sub Heading
-
----
-
-* Item1 in _three_ segments
-* Item2
-* Item3
-
-Normal **Bold** *Italic* [Link](https://fyne.io/) and some ` + "`Code`" + `.
-This styled row should also wrap as expected, but only *when required*.
-
-> An interesting quote here, most likely sharing some very interesting wisdom.`)
-
-	entryLoremIpsum := widget.NewMultiLineEntry()
-	entryLoremIpsum.SetText(loremIpsum)
-	entryLoremIpsum.OnChanged = func(s string) {
-		md.ParseMarkdown(s)
 	}
 
 	w.SetContent(container.NewGridWithRows(3,
@@ -128,38 +91,43 @@ This styled row should also wrap as expected, but only *when required*.
 		),
 		layout.NewSpacer(),
 	))
+	tLength := len(tList)
+	data := make([]string, tLength)
+	for i, node := range tList {
+		data[i] = node.Title
+	}
+	content := container.NewMax()
+	content.Objects = []fyne.CanvasObject{masterContent(w)}
+	listLeading := widget.NewList(
+		func() int {
+			return len(data)
+		},
+		func() fyne.CanvasObject {
+			return container.NewHBox(widget.NewIcon(theme.DocumentIcon()), widget.NewLabel("Template Object"))
+		},
+		func(id widget.ListItemID, item fyne.CanvasObject) {
+			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
+		},
+	)
+	listLeading.OnSelected = func(id widget.ListItemID) {
+		if tLength > id {
+			content.Objects = []fyne.CanvasObject{tList[id].View(w)}
+			content.Refresh()
+		}
+	}
+
 	masterContent := container.NewHSplit(
-		container.NewVBox(hello),
+		listLeading,
 		container.NewBorder(
 			container.NewVBox(widget.NewLabel("Component name"), widget.NewSeparator(), widget.NewLabel("intro")),
 			nil, nil, nil,
-			container.NewVBox(entryLoremIpsum,
-				md,
-				hello,
-				widget.NewButton("Hi!", func() {
-					hello.SetText("Welcome :)")
-				}),
-				clock,
-				content,
-
-				widget.NewCard("nihao", "nihao", canvas.NewText("niaho", green)),
-				widget.NewButton("File Open With Filter (.jpg or .png)", func() {
-					fd := dialog.NewFileOpen(func(closer fyne.URIReadCloser, err error) {
-					}, w)
-					fd.Show()
-				}),
-			),
+			content,
 		),
 	)
-
+	masterContent.Offset = 0.2
 	w.SetContent(masterContent)
-	go func() {
-		for range time.Tick(time.Second) {
-			updateTime(clock)
-		}
-	}()
 
-	w.Resize(fyne.NewSize(480, 480))
+	w.Resize(fyne.NewSize(600, 480))
 
 	w.ShowAndRun()
 }

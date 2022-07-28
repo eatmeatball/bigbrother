@@ -26,6 +26,7 @@ func (m myTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 }
 
 func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
+	//return theme.DefaultTheme().Font(style)
 	return &fyne.StaticResource{
 		StaticName:    "HarmonyOS_Sans_SC_Regular.ttf",
 		StaticContent: hmTTf,
