@@ -2,18 +2,20 @@ package main
 
 import (
 	_ "embed"
+	"fmt"
+	"fyne.io/fyne/v2/dialog"
+	"fyne.io/fyne/v2/layout"
+	"image/color"
+	"log"
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
-	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"image/color"
-	"log"
-	"time"
 )
 
 //go:embed HarmonyOS_Sans_SC_Regular.ttf
@@ -54,12 +56,19 @@ func updateTime(clock *widget.Label) {
 
 func main() {
 	str := binding.NewString()
-	str.Set("Initial value")
+	_ = str.Set("Initial value")
 
 	a := app.New()
 	logLifecycle(a)
 	a.Settings().SetTheme(&myTheme{})
 	w := a.NewWindow("Hello")
+	w.SetMainMenu(fyne.NewMainMenu(
+		fyne.NewMenu("Edit", fyne.NewMenuItem("edit", func() {
+			fmt.Println("edit")
+		}),
+		),
+	))
+	w.SetMaster()
 
 	clock := widget.NewLabel("")
 	w.SetContent(clock)
@@ -84,6 +93,7 @@ func main() {
 	text2 := canvas.NewText("There", green)
 	text2.Move(fyne.NewPos(20, 20))
 	content := container.NewHBox(text1, text2)
+
 	md := widget.NewRichTextFromMarkdown(`
 # RichText Heading
 
@@ -106,27 +116,43 @@ This styled row should also wrap as expected, but only *when required*.
 		md.ParseMarkdown(s)
 	}
 
-	w.SetContent(container.NewVBox(
-		entryLoremIpsum,
-		md,
-		hello,
+	w.SetContent(container.NewGridWithRows(3,
+		layout.NewSpacer(),
+		container.NewGridWithColumns(3,
+			layout.NewSpacer(),
+			container.NewGridWithColumns(1,
+				widget.NewButton("New Project", func() {
+				}),
+			),
+			layout.NewSpacer(),
+		),
+		layout.NewSpacer(),
+	))
+	masterContent := container.NewHSplit(
+		container.NewVBox(hello),
+		container.NewBorder(
+			container.NewVBox(widget.NewLabel("Component name"), widget.NewSeparator(), widget.NewLabel("intro")),
+			nil, nil, nil,
+			container.NewVBox(entryLoremIpsum,
+				md,
+				hello,
+				widget.NewButton("Hi!", func() {
+					hello.SetText("Welcome :)")
+				}),
+				clock,
+				content,
 
-		widget.NewButton("Hi!", func() {
-			hello.SetText("Welcome :)")
-		}),
-		clock,
-		content,
-
-		widget.NewCard("nihao", "nihao", canvas.NewText("niaho", green)),
-
-		widget.NewButton("File Open With Filter (.jpg or .png)", func() {
-
-			fd := dialog.NewFileOpen(func(closer fyne.URIReadCloser, err error) {
-
-			}, w)
-			fd.Show()
-		})),
+				widget.NewCard("nihao", "nihao", canvas.NewText("niaho", green)),
+				widget.NewButton("File Open With Filter (.jpg or .png)", func() {
+					fd := dialog.NewFileOpen(func(closer fyne.URIReadCloser, err error) {
+					}, w)
+					fd.Show()
+				}),
+			),
+		),
 	)
+
+	w.SetContent(masterContent)
 	go func() {
 		for range time.Tick(time.Second) {
 			updateTime(clock)
@@ -136,34 +162,4 @@ This styled row should also wrap as expected, but only *when required*.
 	w.Resize(fyne.NewSize(480, 480))
 
 	w.ShowAndRun()
-}
-
-type myTheme struct{}
-
-var _ fyne.Theme = (*myTheme)(nil)
-
-func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
-	if name == theme.ColorNameBackground {
-		if variant == theme.VariantLight {
-			return color.White
-		}
-		return color.Black
-	}
-
-	return theme.DefaultTheme().Color(name, variant)
-}
-func (m myTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
-
-	return theme.DefaultTheme().Icon(name)
-}
-
-func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
-	return &fyne.StaticResource{
-		StaticName:    "HarmonyOS_Sans_SC_Regular.ttf",
-		StaticContent: hmTTf,
-	}
-}
-
-func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
-	return theme.DefaultTheme().Size(name)
 }
