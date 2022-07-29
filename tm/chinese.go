@@ -1,16 +1,17 @@
-package main
+package tm
 
 import (
+	"bigbrother/resource"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/theme"
 	"image/color"
 )
 
-type myTheme struct{}
+type MyTheme struct{}
 
-var _ fyne.Theme = (*myTheme)(nil)
+var _ fyne.Theme = (*MyTheme)(nil)
 
-func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+func (m MyTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	if name == theme.ColorNameBackground {
 		if variant == theme.VariantLight {
 			return color.White
@@ -20,19 +21,19 @@ func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) colo
 
 	return theme.DefaultTheme().Color(name, variant)
 }
-func (m myTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 
 	return theme.DefaultTheme().Icon(name)
 }
 
-func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
+func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
 	//return theme.DefaultTheme().Font(style)
 	return &fyne.StaticResource{
 		StaticName:    "HarmonyOS_Sans_SC_Regular.ttf",
-		StaticContent: hmTTf,
+		StaticContent: resource.HMttf,
 	}
 }
 
-func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
+func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
 	return theme.DefaultTheme().Size(name)
 }
