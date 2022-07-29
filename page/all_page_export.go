@@ -19,8 +19,10 @@ var (
 		{Title: "Welcome", Intro: "Welcome", View: WelcomePage},
 		{Title: "Jwt", Intro: "page1", View: Page1},
 		{Title: "UrlEncode", Intro: "UrlEncode", View: urlencode},
-		{Title: "page2", Intro: "page2", View: Page2},
-		{Title: "page1", Intro: "page1", View: masterContent},
+		{Title: "UrlEncode", Intro: "UrlEncode", View: makeTableTab},
+		{Title: "timeButton", Intro: "time", View: getTimeButton},
+		{Title: "clockPage", Intro: "clockPage", View: clockPage},
+		{Title: "other", Intro: "other", View: masterContent},
 		{Title: "about", Intro: "about", View: about},
 	}
 )

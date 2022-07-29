@@ -95,7 +95,7 @@ func main() {
 		}
 	}
 
-	listLeading.Select(0)
+	listLeading.Select(2)
 
 	masterContent := container.NewHSplit(
 		listLeading,
