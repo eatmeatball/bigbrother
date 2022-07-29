@@ -1,20 +1,32 @@
 package main
 
 import (
+	"encoding/json"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/spf13/cast"
 	"image/color"
+	"net/url"
 	"time"
 )
 
+func BResource(data []byte) *fyne.StaticResource {
+	return &fyne.StaticResource{
+		StaticName:    "logo.png",
+		StaticContent: data,
+	}
+}
+
 var (
 	tList = []ListNode{
-		{Title: "page1", Intro: "page1", View: masterContent},
-		{Title: "page1", Intro: "page1", View: Page1},
+		{Title: "Welcome", Intro: "Welcome", View: WelcomePage},
+		{Title: "Jwt", Intro: "page1", View: Page1},
 		{Title: "page2", Intro: "page2", View: Page2},
+		{Title: "page1", Intro: "page1", View: masterContent},
 	}
 )
 
@@ -23,16 +35,65 @@ type ListNode struct {
 	View         func(w fyne.Window) *fyne.Container
 }
 
+func WelcomePage(w fyne.Window) *fyne.Container {
+	logoObj := canvas.NewImageFromResource(BResource(logo))
+	logoObj.FillMode = canvas.ImageFillContain
+	logoObj.SetMinSize(fyne.NewSize(256, 256))
+	return container.NewCenter(container.NewVBox(
+		widget.NewLabelWithStyle("Welcome to the Fyne toolkit demo app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+		logoObj,
+		container.NewHBox(
+			widget.NewHyperlink("fyne.io", parseURL("https://fyne.io/")),
+			widget.NewLabel("-"),
+			widget.NewHyperlink("documentation", parseURL("https://developer.fyne.io/")),
+			widget.NewLabel("-"),
+			widget.NewHyperlink("sponsor", parseURL("https://fyne.io/sponsor/")),
+		),
+		widget.NewLabel(""), // balance the header on the tutorial screen we leave blank on this content
+	))
+}
+
+func parseURL(urlStr string) *url.URL {
+	link, err := url.Parse(urlStr)
+	if err != nil {
+		fyne.LogError("Could not parse URL", err)
+	}
+
+	return link
+}
+
 func Page1(w fyne.Window) *fyne.Container {
 
 	end := widget.NewMultiLineEntry()
 	end.Wrapping = fyne.TextWrapBreak
-	
+
 	entryLoremIpsum := widget.NewMultiLineEntry()
 	entryLoremIpsum.Wrapping = fyne.TextWrapBreak
 	entryLoremIpsum.SetText(loremIpsum)
 	entryLoremIpsum.OnChanged = func(s string) {
-		end.SetText(s)
+		jwtStr := s
+		token, _ := jwt.Parse(jwtStr,
+			// 防止bug从我做起
+			func([]byte) func(token *jwt.Token) (i any, e error) {
+				return func(token *jwt.Token) (i any, e error) {
+					return "", nil
+				}
+			}([]byte("")))
+
+		//if err != nil {
+		//	end.SetText(cast.ToString(err.Error()))
+		//	return
+		//}
+
+		if token == nil || token.Claims == nil {
+			end.SetText("无法解析")
+			return
+		}
+
+		//data, _ := json.Marshal(token.Claims)
+		data, _ := json.MarshalIndent(token.Claims, "", "  ")
+		result := cast.ToString(data)
+		end.SetText(result)
 	}
 	v := container.NewVSplit(
 		entryLoremIpsum,

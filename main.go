@@ -19,6 +19,9 @@ import (
 //go:embed HarmonyOS_Sans_SC_Regular.ttf
 var hmTTf []byte
 
+//go:embed resource/logo.png
+var logo []byte
+
 const (
 	loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis consectetur nisi. Suspendisse id interdum felis.
 Sed egestas eget tellus eu pharetra. Praesent pulvinar sed massa id placerat. Etiam sem libero, semper vitae consequat ut, volutpat id mi.
@@ -97,7 +100,8 @@ func main() {
 		data[i] = node.Title
 	}
 	content := container.NewMax()
-	content.Objects = []fyne.CanvasObject{masterContent(w)}
+	content.Objects = []fyne.CanvasObject{WelcomePage(w)}
+
 	listLeading := widget.NewList(
 		func() int {
 			return len(data)
@@ -109,9 +113,14 @@ func main() {
 			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
 		},
 	)
+	title := widget.NewLabel("Component name")
+	intro := widget.NewLabel("intro")
 	listLeading.OnSelected = func(id widget.ListItemID) {
 		if tLength > id {
-			content.Objects = []fyne.CanvasObject{tList[id].View(w)}
+			tItem := tList[id]
+			title.SetText(tItem.Title)
+			title.SetText(tItem.Intro)
+			content.Objects = []fyne.CanvasObject{tItem.View(w)}
 			content.Refresh()
 		}
 	}
@@ -119,8 +128,15 @@ func main() {
 	masterContent := container.NewHSplit(
 		listLeading,
 		container.NewBorder(
-			container.NewVBox(widget.NewLabel("Component name"), widget.NewSeparator(), widget.NewLabel("intro")),
+
+			container.NewVBox(
+				title,
+				widget.NewSeparator(),
+				intro,
+			),
+
 			nil, nil, nil,
+			
 			content,
 		),
 	)
