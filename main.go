@@ -113,8 +113,8 @@ func main() {
 			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
 		},
 	)
-	title := widget.NewLabel("Component name")
-	intro := widget.NewLabel("intro")
+	title := widget.NewLabel("")
+	intro := widget.NewLabel("")
 	listLeading.OnSelected = func(id widget.ListItemID) {
 		if tLength > id {
 			tItem := tList[id]
@@ -124,6 +124,7 @@ func main() {
 			content.Refresh()
 		}
 	}
+	listLeading.Select(0)
 
 	masterContent := container.NewHSplit(
 		listLeading,
@@ -136,7 +137,7 @@ func main() {
 			),
 
 			nil, nil, nil,
-			
+
 			content,
 		),
 	)
