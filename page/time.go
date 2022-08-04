@@ -4,18 +4,19 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
-	"net/url"
+	"github.com/spf13/cast"
+	"time"
 )
 
-func urlEncodePage(w fyne.Window) *fyne.Container {
+func timePage(w fyne.Window) *fyne.Container {
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak
 	show.Disable()
 	input := widget.NewMultiLineEntry()
 	input.Wrapping = fyne.TextWrapBreak
 	input.OnChanged = func(s string) {
-		enEscapeUrl, _ := url.QueryUnescape(s)
-		show.SetText("解码:" + enEscapeUrl)
+		iTime := time.Unix(cast.ToInt64(s), 0)
+		show.SetText("日期:" + iTime.Format("2006-01-02 15:04:05"))
 	}
 
 	input.SetText("")
