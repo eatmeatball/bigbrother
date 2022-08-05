@@ -13,7 +13,7 @@ func JwtParsePage(w fyne.Window) *fyne.Container {
 
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak
-	show.Disable()
+	//show.Disable()
 	input := widget.NewMultiLineEntry()
 	input.Wrapping = fyne.TextWrapBreak
 	input.OnChanged = func(s string) {

@@ -9,22 +9,51 @@ import (
 )
 
 func timePage(w fyne.Window) *fyne.Container {
-	show := widget.NewMultiLineEntry()
-	show.Wrapping = fyne.TextWrapBreak
+
+	t1 := tractionInput("时间戳转化日期", func(s string) string {
+		return time.Unix(cast.ToInt64(s), 0).Format("2006-01-02 15:04:05")
+	})
+
+	t2 := tractionInput("日期转化时间戳", func(s string) string {
+		var LOC, _ = time.LoadLocation("Asia/Shanghai")
+		timeTemplate := "2006-01-02 15:04:05"
+		tim, _ := time.ParseInLocation(timeTemplate, s, LOC)
+		return cast.ToString(tim.Unix())
+	})
+	page := container.NewVBox(t1, t2,
+		widget.NewSeparator(), getNowTime())
+	return container.NewMax(page)
+
+}
+
+func tractionInput(desc string, traction func(s string) string) *fyne.Container {
+	// init
+	input := widget.NewEntry()
+	descShow := widget.NewLabel(desc)
+	show := widget.NewEntry()
+	// set style
+	descShow.Alignment = fyne.TextAlignCenter
 	show.Disable()
-	input := widget.NewMultiLineEntry()
-	input.Wrapping = fyne.TextWrapBreak
+	// set event
 	input.OnChanged = func(s string) {
-		iTime := time.Unix(cast.ToInt64(s), 0)
-		show.SetText("日期:" + iTime.Format("2006-01-02 15:04:05"))
+		show.SetText(traction(s))
 	}
 
-	input.SetText("")
-	v := container.NewVSplit(
-		input,
-		show,
+	rows := container.NewGridWithRows(1,
+		container.NewGridWithColumns(3, input, descShow, show),
 	)
-	v.Offset = 0.5
-	return container.NewMax(v)
+	return rows
+}
 
+func getNowTime() *fyne.Container {
+	show1 := widget.NewEntry()
+	show2 := widget.NewEntry()
+	button := widget.NewButton("获取最新时间", func() {
+		show1.SetText(time.Now().Format("2006-01-02 15:04:05"))
+		show2.SetText(cast.ToString(time.Now().Unix()))
+	})
+	rows := container.NewGridWithRows(1,
+		container.NewGridWithColumns(3, show1, show2, button),
+	)
+	return rows
 }

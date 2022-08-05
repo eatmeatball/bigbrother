@@ -18,7 +18,7 @@ func urlEncodePage(w fyne.Window) *fyne.Container {
 		show.SetText("解码:" + enEscapeUrl)
 	}
 
-	input.SetText("")
+	input.SetText("%E6%B1%89%E5%AD%97")
 	v := container.NewVSplit(
 		input,
 		show,

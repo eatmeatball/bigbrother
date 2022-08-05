@@ -17,13 +17,15 @@ type ListNode struct {
 var (
 	TList = []ListNode{
 		{Title: "Welcome", Intro: "Welcome", View: WelcomePage},
-		{Title: "Jwt", Intro: "jwt解析", View: JwtParsePage},
+		{Title: "Jwt解析", Intro: "jwt解析", View: JwtParsePage},
 		{Title: "UrlEncode", Intro: "UrlEncode", View: urlEncodePage},
-		{Title: "timePage", Intro: "timePage", View: timePage},
+		{Title: "时间转化", Intro: "timePage", View: timePage},
+		{Title: "json2yaml", Intro: "json2yaml", View: json2yaml},
 		{Title: "clockPage", Intro: "clockPage", View: clockPage},
-		{Title: "table", Intro: "table", View: makeTableTab},
 		{Title: "timeButton", Intro: "time", View: getTimeButton},
 		{Title: "other", Intro: "other", View: masterContent},
 		{Title: "about", Intro: "about", View: about},
+		//{Title: "table", Intro: "table", View: makeTableTab},
 	}
+	Index = 3
 )
