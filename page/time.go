@@ -33,7 +33,7 @@ func tractionInput(desc string, traction func(s string) string) *fyne.Container 
 	show := widget.NewEntry()
 	// set style
 	descShow.Alignment = fyne.TextAlignCenter
-	show.Disable()
+	//show.Disable()
 	// set event
 	input.OnChanged = func(s string) {
 		show.SetText(traction(s))
