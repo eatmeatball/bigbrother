@@ -12,6 +12,7 @@ func BResource(data []byte) *fyne.StaticResource {
 type ListNode struct {
 	Title, Intro string
 	View         func(w fyne.Window) *fyne.Container
+	V            *[]fyne.CanvasObject
 }
 
 var (

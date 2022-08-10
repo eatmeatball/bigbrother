@@ -95,28 +95,28 @@ func main() {
 			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
 		},
 	)
-	contentHistory := map[int][]fyne.CanvasObject{}
-	listLeading.OnSelected = func(id widget.ListItemID) {
-		if tLength > id {
-			tItem := page.TList[id]
-			title.SetText(tItem.Title)
-			intro.SetText(tItem.Intro)
-			var tmp []fyne.CanvasObject
-			if historyObject, ok := contentHistory[id]; ok {
-				tmp = historyObject
-			} else {
-				contentHistory[id] = []fyne.CanvasObject{tItem.View(w)}
-				tmp = contentHistory[id]
-			}
-			content.Objects = tmp
-			content.Refresh()
-			appSetting.Index = id
-			appSetting.saveToFile()
-		}
-	}
+	//contentHistory := map[int][]fyne.CanvasObject{}
+	//listLeading.OnSelected = func(id widget.ListItemID) {
+	//	if tLength > id {
+	//		tItem := page.TList[id]
+	//		title.SetText(tItem.Title)
+	//		intro.SetText(tItem.Intro)
+	//		var tmp []fyne.CanvasObject
+	//		if historyObject, ok := contentHistory[id]; ok {
+	//			tmp = historyObject
+	//		} else {
+	//			contentHistory[id] = []fyne.CanvasObject{tItem.View(w)}
+	//			tmp = contentHistory[id]
+	//		}
+	//		content.Objects = tmp
+	//		content.Refresh()
+	//		appSetting.Index = id
+	//		appSetting.saveToFile()
+	//	}
+	//}
 
 	//listLeading.Select(page.Index)
-	listLeading.Select(appSetting.Index)
+	//listLeading.Select(appSetting.Index)
 
 	if false {
 
@@ -145,12 +145,10 @@ func main() {
 			callBack := func(index int, node page.ListNode) func() {
 				return func() {
 					var tmp []fyne.CanvasObject
-					if historyObject, ok := contentHistory[index]; ok {
-						tmp = historyObject
-					} else {
-						contentHistory[index] = []fyne.CanvasObject{node.View(w)}
-						tmp = contentHistory[index]
+					if node.V == nil {
+						node.V = &[]fyne.CanvasObject{node.View(w)}
 					}
+					tmp = *node.V
 					content.Objects = tmp
 					content.Refresh()
 					appSetting.Index = index

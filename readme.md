@@ -10,3 +10,7 @@ go build -ldflags -H=windowsgui .
 go install fyne.io/fyne/v2/cmd/fyne@latest
 fyne package -os windows -icon logo.png
 ```
+```cmd
+cd ..
+go work init .\bigbrother\     
+```
