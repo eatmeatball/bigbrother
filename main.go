@@ -160,6 +160,8 @@ func main() {
 		rectangles := canvas.NewRectangle(color.RGBA{R: 49, G: 48, B: 66})
 		left := container.NewVScroll(container.NewVBox(leftList...))
 
+		leftList[appSetting.Index].(*widget.Button).OnTapped()
+
 		leftContent := container.NewMax(
 			left,
 			rectangles,
@@ -171,7 +173,7 @@ func main() {
 		w.SetContent(masterContent)
 	}
 
-	w.Resize(fyne.NewSize(720, 450))
+	w.Resize(fyne.NewSize(800, 600))
 
 	w.ShowAndRun()
 }

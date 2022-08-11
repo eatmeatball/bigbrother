@@ -12,7 +12,8 @@ type MyTheme struct{}
 var _ fyne.Theme = (*MyTheme)(nil)
 
 func (m MyTheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
-	if true {
+	//return theme.DefaultTheme().Color(n, v)
+	if false {
 		switch n {
 		case theme.ColorNameBackground:
 			return color.NRGBA{R: 0x24, G: 0x27, B: 0x2e, A: 0xff}
@@ -50,7 +51,7 @@ func (m MyTheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
 	case theme.ColorNameBackground:
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNameButton:
-		return Blue100
+		return BlueGray300
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNameDisabledButton:
 		return theme.DefaultTheme().Color(n, v)
@@ -65,14 +66,12 @@ func (m MyTheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
 	case theme.ColorNameHover:
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNameInputBackground:
-		return BlueGray50
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNamePlaceHolder:
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNamePressed:
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNamePrimary:
-		return Green100
 		return theme.DefaultTheme().Color(n, v)
 	case theme.ColorNameScrollBar:
 		return theme.DefaultTheme().Color(n, v)

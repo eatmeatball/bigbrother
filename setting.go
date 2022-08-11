@@ -2,9 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"fyne.io/fyne/v2/app"
-	"github.com/spf13/cast"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -46,7 +44,6 @@ func (s *Setting) saveToFile() error {
 	}
 
 	data, err := json.Marshal(&s)
-	fmt.Println(cast.ToString(data), err)
 	if err != nil {
 		return err
 	}

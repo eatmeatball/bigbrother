@@ -42,7 +42,7 @@ func JwtParsePage(w fyne.Window) *fyne.Container {
 		show.SetText(result)
 	}
 
-	input.SetText("")
+	input.SetText(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEwLCJCdWZmZXJUaW1lIjo4NjQwMCwiaXNzIjoidGhoIiwiZXhwIjoxNjYwNzM0OTMwLCJuYmYiOjE2NjAxMzAxMzB9.tnTQYaaM7FfJhah9veVNS0OSkh1q4hKtP1UUUgESCQY`)
 	v := container.NewVSplit(
 		input,
 		show,

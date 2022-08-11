@@ -1,27 +1,48 @@
 package page
 
 import (
-	"bigbrother/resource"
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
 
 func about(w fyne.Window) *fyne.Container {
-	logoObj := canvas.NewImageFromResource(BResource(resource.Logo))
-	logoObj.FillMode = canvas.ImageFillContain
-	logoObj.SetMinSize(fyne.NewSize(256, 256))
-	return container.NewCenter(container.NewVBox(
-		widget.NewLabelWithStyle("Welcome to the Fyne toolkit demo app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
-		logoObj,
-		container.NewHBox(
-			widget.NewHyperlink("fyne.io", parseURL("https://fyne.io/")),
-			widget.NewLabel("-"),
-			widget.NewHyperlink("documentation", parseURL("https://developer.fyne.io/")),
-			widget.NewLabel("-"),
-			widget.NewHyperlink("sponsor", parseURL("https://fyne.io/sponsor/")),
-		),
-		widget.NewLabel(""), // balance the header on the tutorial screen we leave blank on this content
-	))
+	text := `
+# about
+## What's it？
+
+It's a gui tool with go.
+
+---
+
+* Item1 in _three_ segments
+* Item2
+* Item3
+---
+
+* Item1 in _three_ segments
+* Item2
+* Item3
+---
+
+* Item1 in _three_ segments
+* Item2
+* Item3
+
+`
+	about := widget.NewRichTextFromMarkdown(text)
+	about.Wrapping = fyne.TextWrapWord
+	//about.Scroll = container.ScrollBoth
+
+	for i := range about.Segments {
+		if seg, ok := about.Segments[i].(*widget.TextSegment); ok {
+			seg.Style.Alignment = fyne.TextAlignCenter
+		}
+		if seg, ok := about.Segments[i].(*widget.HyperlinkSegment); ok {
+			seg.Alignment = fyne.TextAlignCenter
+		}
+	}
+	return container.NewVBox(
+		about,
+	)
 }
