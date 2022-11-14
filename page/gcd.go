@@ -13,6 +13,8 @@ func gcdPage(_ fyne.Window) *fyne.Container {
 	a := widget.NewEntry()
 	b := widget.NewEntry()
 	show := widget.NewEntry()
+	a.SetText("1")
+	b.SetText("1")
 	// set style
 	//show.Disable()
 	// set event
@@ -41,6 +43,7 @@ func gcdPage(_ fyne.Window) *fyne.Container {
 	rows := container.NewGridWithRows(1,
 		container.NewGridWithColumns(3, a, b, show),
 	)
+
 	return rows
 
 }

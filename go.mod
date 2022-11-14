@@ -3,7 +3,7 @@ module bigbrother
 go 1.18
 
 require (
-	fyne.io/fyne/v2 v2.2.3
+	fyne.io/fyne/v2 v2.2.4
 	github.com/gertd/go-pluralize v0.2.1
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/iancoleman/strcase v0.2.0
