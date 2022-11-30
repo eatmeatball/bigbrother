@@ -12,24 +12,32 @@ func Base64Page(w fyne.Window) *fyne.Container {
 
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak
-	input := widget.NewMultiLineEntry()
-	input.Wrapping = fyne.TextWrapBreak
-	input.OnChanged = func(s string) {
-		data, err := base64.StdEncoding.DecodeString(s)
-		var result string
-		if err != nil {
-			result = "无法解析"
-		}
-		result = cast.ToString(data)
-		show.SetText(result)
-	}
 
-	input.SetText(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEwLCJCdWZmZXJUaW1lIjo4NjQwMCwiaXNzIjoidGhoIiwiZXhwIjoxNjYwNzM0OTMwLCJuYmYiOjE2NjAxMzAxMzB9.tnTQYaaM7FfJhah9veVNS0OSkh1q4hKtP1UUUgESCQY`)
-	v := container.NewVSplit(
-		input,
+	show.SetText(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEwLCJCdWZmZXJUaW1lIjo4NjQwMCwiaXNzIjoidGhoIiwiZXhwIjoxNjYwNzM0OTMwLCJuYmYiOjE2NjAxMzAxMzB9.tnTQYaaM7FfJhah9veVNS0OSkh1q4hKtP1UUUgESCQY`)
+
+	base64DecodeButton := widget.NewButton("decode", func() {
+		data, _ := base64.StdEncoding.DecodeString(show.Text)
+		var result string
+		//fmt.Println(err, data)
+		//if err != nil {
+		//	return
+		//}
+		result = cast.ToString(data)
+		if len(data) == 0 {
+			return
+		}
+		show.SetText(result)
+	})
+	base64EncodeButton := widget.NewButton("encode", func() {
+		data := base64.StdEncoding.EncodeToString([]byte(show.Text))
+		show.SetText(data)
+	})
+	masterContent := container.NewBorder(
+		container.NewGridWithRows(1,
+			container.NewGridWithColumns(2, base64DecodeButton, base64EncodeButton),
+		), nil, nil, nil,
 		show,
 	)
-	v.Offset = 0.5
-	return container.NewMax(v)
+	return masterContent
 
 }
