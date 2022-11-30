@@ -23,6 +23,7 @@ var (
 		{Title: "时间转化", Intro: "timePage", View: timePage},
 		{Title: "json2yaml", Intro: "json2yaml", View: json2yaml},
 		{Title: "驼峰转下滑线", Intro: "camel2snake", View: camel2snake},
+		{Title: "Base64Decode", Intro: "Base64Page", View: Base64Page},
 		{Title: "公约数", Intro: "公约数", View: gcdPage},
 		{Title: "clockPage", Intro: "clockPage", View: clockPage},
 		{Title: "button", Intro: "time", View: getTimeButton},
