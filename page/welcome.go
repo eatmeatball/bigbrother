@@ -13,10 +13,10 @@ func WelcomePage(w fyne.Window) *fyne.Container {
 	logoObj := canvas.NewImageFromResource(BResource(resource.Logo))
 	logoObj.FillMode = canvas.ImageFillContain
 	logoObj.SetMinSize(fyne.NewSize(256, 256))
-	linkT := widget.NewHyperlink("fyne.io", parseURL("https://fyne.io/"))
+	linkT := widget.NewHyperlink("thh9.github.io", parseURL("https://thh9.github.io/"))
 
 	return container.NewCenter(container.NewVBox(
-		widget.NewLabelWithStyle("Welcome to the Fyne toolkit demo app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
+		widget.NewLabelWithStyle("Welcome to the BigBrother toolkit app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
 		logoObj,
 		container.NewHBox(
 			linkT,
