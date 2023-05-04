@@ -56,7 +56,7 @@ func main() {
 	})
 	// 桌面系统设置托盘
 	if desk, ok := a.(desktop.App); ok {
-		m := fyne.NewMenu("MyApp",
+		m := fyne.NewMenu("bigBrother",
 			fyne.NewMenuItem("Show", func() {
 				w.Show()
 			}))
@@ -95,28 +95,6 @@ func main() {
 			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
 		},
 	)
-	//contentHistory := map[int][]fyne.CanvasObject{}
-	//listLeading.OnSelected = func(id widget.ListItemID) {
-	//	if tLength > id {
-	//		tItem := page.TList[id]
-	//		title.SetText(tItem.Title)
-	//		intro.SetText(tItem.Intro)
-	//		var tmp []fyne.CanvasObject
-	//		if historyObject, ok := contentHistory[id]; ok {
-	//			tmp = historyObject
-	//		} else {
-	//			contentHistory[id] = []fyne.CanvasObject{tItem.View(w)}
-	//			tmp = contentHistory[id]
-	//		}
-	//		content.Objects = tmp
-	//		content.Refresh()
-	//		appSetting.Index = id
-	//		appSetting.saveToFile()
-	//	}
-	//}
-
-	//listLeading.Select(page.Index)
-	//listLeading.Select(appSetting.Index)
 
 	if false {
 
@@ -140,7 +118,7 @@ func main() {
 		w.SetContent(masterContent)
 	} else {
 
-		leftList := []fyne.CanvasObject{}
+		var leftList []fyne.CanvasObject
 		for index, node := range page.TList {
 			callBack := func(index int, node page.ListNode) func() {
 				return func() {

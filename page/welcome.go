@@ -13,7 +13,7 @@ func WelcomePage(w fyne.Window) *fyne.Container {
 	logoObj := canvas.NewImageFromResource(BResource(resource.Logo))
 	logoObj.FillMode = canvas.ImageFillContain
 	logoObj.SetMinSize(fyne.NewSize(256, 256))
-	linkT := widget.NewHyperlink("thh9.github.io", parseURL("https://thh9.github.io/"))
+	linkT := widget.NewHyperlink("eatmeatball.github.io", parseURL("https://eatmeatball.github.io/"))
 
 	return container.NewCenter(container.NewVBox(
 		widget.NewLabelWithStyle("Welcome to the BigBrother toolkit app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
