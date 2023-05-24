@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fyne.io/fyne/v2/app"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -48,5 +47,5 @@ func (s *Setting) saveToFile() error {
 		return err
 	}
 
-	return ioutil.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0644)
 }

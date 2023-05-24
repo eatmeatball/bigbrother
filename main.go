@@ -11,10 +11,10 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"image/color"
 	"log"
+	"time"
 )
 
 func logLifecycle(a fyne.App) {
@@ -81,75 +81,41 @@ func main() {
 		data[i] = node.Title
 	}
 	content := container.NewMax()
-	title := widget.NewLabel("")
-	intro := widget.NewLabel("")
-	listLeading := widget.NewList(
-		func() int {
-			return len(data)
-		},
-		func() fyne.CanvasObject {
-			return container.NewHBox(widget.NewIcon(theme.SearchReplaceIcon()), widget.NewLabel(""))
-		},
-		func(id widget.ListItemID, item fyne.CanvasObject) {
-			item.(*fyne.Container).Objects[0].(*widget.Icon).SetResource(theme.MenuIcon())
-			item.(*fyne.Container).Objects[1].(*widget.Label).SetText(data[id])
-		},
-	)
 
-	if false {
-
-		masterContent := container.NewHSplit(
-			listLeading,
-			container.NewBorder(
-
-				container.NewVBox(
-					title,
-					widget.NewSeparator(),
-					intro,
-				),
-
-				nil, nil, nil,
-
-				content,
-			),
-		)
-		masterContent.Offset = 0.2
-
-		w.SetContent(masterContent)
-	} else {
-
-		var leftList []fyne.CanvasObject
-		for index, node := range page.TList {
-			callBack := func(index int, node page.ListNode) func() {
-				return func() {
-					var tmp []fyne.CanvasObject
-					if node.V == nil {
-						node.V = &[]fyne.CanvasObject{node.View(w)}
-					}
-					tmp = *node.V
-					content.Objects = tmp
-					content.Refresh()
-					appSetting.Index = index
-					appSetting.saveToFile()
+	var leftList []fyne.CanvasObject
+	for index, node := range page.TList {
+		callBack := func(index int, node page.ListNode) func() {
+			return func() {
+				start := time.Now()
+				var tmp []fyne.CanvasObject
+				if node.V == nil {
+					node.V = &[]fyne.CanvasObject{node.View(w)}
 				}
-			}(index, node)
-			leftList = append(leftList, widget.NewButton(node.Title, callBack))
-		}
-		rectangles := canvas.NewRectangle(color.RGBA{R: 49, G: 48, B: 66})
-		left := container.NewVScroll(container.NewVBox(leftList...))
-
-		leftList[appSetting.Index].(*widget.Button).OnTapped()
-
-		leftContent := container.NewMax(
-			left,
-			rectangles,
-		)
-		masterContent := container.NewBorder(
-			nil, nil, leftContent, nil,
-			content,
-		)
-		w.SetContent(masterContent)
+				tmp = *node.V
+				content.Objects = tmp
+				content.Refresh()
+				appSetting.Index = index
+				appSetting.saveToFile()
+				end:= time.Now()
+				fmt.Println(end.Sub(start))
+			}
+		}(index, node)
+		leftList = append(leftList, widget.NewButton(node.Title, callBack))
 	}
+	rectangles := canvas.NewRectangle(color.RGBA{R: 49, G: 48, B: 66})
+	left := container.NewVScroll(container.NewVBox(leftList...))
+
+	leftList[appSetting.Index].(*widget.Button).OnTapped()
+
+	leftContent := container.NewMax(
+		left,
+		rectangles,
+	)
+	masterContent := container.NewBorder(
+		nil, nil, leftContent, nil,
+		content,
+	)
+	w.SetContent(masterContent)
 
 	w.Resize(fyne.NewSize(800, 600))
 
