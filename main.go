@@ -32,17 +32,17 @@ func main() {
 
 	w.SetMainMenu(makeMenu(a, w))
 	w.SetMaster()
-	w.SetCloseIntercept(func() {
-		w.Hide()
-	})
-	// 桌面系统设置托盘
-	if desk, ok := a.(desktop.App); ok {
-		m := fyne.NewMenu("bigBrother",
-			fyne.NewMenuItem("Show", func() {
-				w.Show()
-			}))
-		desk.SetSystemTrayMenu(m)
-	}
+	//w.SetCloseIntercept(func() {
+	//	w.Hide()
+	//})
+	//// 桌面系统设置托盘
+	//if desk, ok := a.(desktop.App); ok {
+	//	m := fyne.NewMenu("bigBrother",
+	//		fyne.NewMenuItem("Show", func() {
+	//			w.Show()
+	//		}))
+	//	desk.SetSystemTrayMenu(m)
+	//}
 	// 设置主体
 	a.Settings().SetTheme(&tm.MyTheme{})
 
