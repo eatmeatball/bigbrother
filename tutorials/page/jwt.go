@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-func JwtParsePage(w fyne.Window) *fyne.Container {
+func JwtParsePage(w fyne.Window) fyne.CanvasObject {
 
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak

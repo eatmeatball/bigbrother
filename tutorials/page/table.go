@@ -7,7 +7,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func makeTableTab(_ fyne.Window) *fyne.Container {
+func makeTableTab(_ fyne.Window) fyne.CanvasObject {
 	t := widget.NewTable(
 		func() (int, int) { return 500, 150 },
 		func() fyne.CanvasObject {

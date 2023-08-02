@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-func gcdPage(_ fyne.Window) *fyne.Container {
+func GcdPage(_ fyne.Window) fyne.CanvasObject {
 	// init
 	a := widget.NewEntry()
 	b := widget.NewEntry()

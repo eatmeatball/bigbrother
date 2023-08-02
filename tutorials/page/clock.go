@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func clockPage(_ fyne.Window) *fyne.Container {
+func ClockPage(_ fyne.Window) fyne.CanvasObject {
 	clock := widget.NewLabel("")
 	clock.SetText("")
 	clock.Alignment = fyne.TextAlignCenter

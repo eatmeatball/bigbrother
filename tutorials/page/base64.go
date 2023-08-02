@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-func Base64Page(w fyne.Window) *fyne.Container {
+func Base64Page(w fyne.Window) fyne.CanvasObject {
 
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak

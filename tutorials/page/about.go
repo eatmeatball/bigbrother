@@ -6,9 +6,9 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func about(w fyne.Window) *fyne.Container {
+func About(w fyne.Window) fyne.CanvasObject {
 	text := `
-# about
+# About
 ## What's it？
 
 It's a gui tool with go.
@@ -32,7 +32,7 @@ It's a gui tool with go.
 `
 	about := widget.NewRichTextFromMarkdown(text)
 	about.Wrapping = fyne.TextWrapWord
-	//about.Scroll = container.ScrollBoth
+	//About.Scroll = container.ScrollBoth
 
 	for i := range about.Segments {
 		if seg, ok := about.Segments[i].(*widget.TextSegment); ok {

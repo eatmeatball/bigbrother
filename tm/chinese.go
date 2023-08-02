@@ -13,41 +13,7 @@ var _ fyne.Theme = (*MyTheme)(nil)
 
 func (m MyTheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
 	//return theme.DefaultTheme().Color(n, v)
-	switch n {
-	case theme.ColorNameBackground:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameButton:
-		return BlueGray300
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameDisabledButton:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameDisabled:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameError:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameFocus:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameForeground:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameHover:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameInputBackground:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNamePlaceHolder:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNamePressed:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNamePrimary:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameScrollBar:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameSelection:
-		return theme.DefaultTheme().Color(n, v)
-	case theme.ColorNameShadow:
-		return theme.DefaultTheme().Color(n, v)
-	default:
-		return theme.DefaultTheme().Color(n, v)
-	}
+	return theme.DefaultTheme().Color(n, v)
 }
 func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 

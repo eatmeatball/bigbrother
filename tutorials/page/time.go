@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func timePage(w fyne.Window) *fyne.Container {
+func TimePage(w fyne.Window) fyne.CanvasObject {
 
 	t1 := tractionInput("时间戳转化日期", func(s string) string {
 		return time.Unix(cast.ToInt64(s), 0).Format("2006-01-02 15:04:05")

@@ -7,7 +7,7 @@ import (
 	"github.com/leancodebox/goose/unicode"
 )
 
-func unicodePage(w fyne.Window) *fyne.Container {
+func UnicodePage(w fyne.Window) fyne.CanvasObject {
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak
 	//show.Disable()

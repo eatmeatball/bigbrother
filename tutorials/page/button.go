@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func getTimeButton(w fyne.Window) *fyne.Container {
+func GetTimeButton(w fyne.Window) fyne.CanvasObject {
 
 	clock := widget.NewLabel("")
 	clock.SetText("")

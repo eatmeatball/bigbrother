@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-func urlEncodePage(w fyne.Window) *fyne.Container {
+func UrlEncodePage(w fyne.Window) fyne.CanvasObject {
 	show := widget.NewMultiLineEntry()
 	show.Wrapping = fyne.TextWrapBreak
 	//show.Disable()
