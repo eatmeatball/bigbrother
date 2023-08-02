@@ -214,12 +214,12 @@ var (
 			true,
 			nil,
 		},
-		{"Advanced",
-			"Debug and advanced information.",
-			advancedScreen,
-			true,
-			nil,
-		},
+		//{"Advanced",
+		//	"Debug and advanced information.",
+		//	advancedScreen,
+		//	true,
+		//	nil,
+		//},
 	}
 
 	// Tutorials defines the metadata for each tutorial
