@@ -74,14 +74,21 @@ func main() {
 	if fyne.CurrentDevice().IsMobile() {
 		w.SetContent(makeNav(setTutorial, false))
 	} else {
-		split := container.NewHSplit(makeNav(setTutorial, true), tutorial)
-		split.Offset = 0.2
+
+		nav := makeNav(setTutorial, true)
+
+		masterContent := container.NewHSplit(nav, tutorial)
+		masterContent.Offset = 0.2
+
+		//masterContent := container.NewBorder(nil, nil, nav, nil, tutorial)
+
+		//nav := makeNav(setTutorial, true)
 		//masterContent := container.NewBorder(
-		//	nil, nil, makeNav(setTutorial, true), nil,
+		//	nil, nil, nav, nil,
 		//	tutorial,
 		//)
 
-		w.SetContent(split)
+		w.SetContent(masterContent)
 	}
 	w.Resize(fyne.NewSize(960, 690))
 	w.ShowAndRun()
