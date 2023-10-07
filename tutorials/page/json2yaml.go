@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 	"github.com/spf13/cast"
 	"gopkg.in/yaml.v3"
+	"strings"
 )
 
 func Json2yaml(w fyne.Window) fyne.CanvasObject {
@@ -53,25 +54,31 @@ func Json2yaml(w fyne.Window) fyne.CanvasObject {
 
 }
 
-func DataBindPage(w fyne.Window) fyne.CanvasObject {
+func LowerUpper(w fyne.Window) fyne.CanvasObject {
 
-	oData := ""
-	bindData := binding.BindString(&oData)
+	inputBig := binding.NewString()
+	inputLower := binding.NewString()
 
-	input := widget.NewMultiLineEntry()
-	input.Bind(bindData)
-	input.Wrapping = fyne.TextWrapBreak
+	lower := widget.NewMultiLineEntry()
+	lower.Bind(inputBig)
+	lower.OnChanged = func(s string) {
+		_ = inputLower.Set(strings.ToUpper(s))
+	}
+	lower.Wrapping = fyne.TextWrapBreak
 
-	show := widget.NewMultiLineEntry()
-	show.Bind(bindData)
-	show.Wrapping = fyne.TextWrapBreak
+	upper := widget.NewMultiLineEntry()
+	upper.Bind(inputLower)
+	upper.OnChanged = func(s string) {
+		_ = inputBig.Set(strings.ToLower(s))
+	}
+	upper.Wrapping = fyne.TextWrapBreak
 
 	//show.Disable()
 
-	input.SetPlaceHolder("输入json")
+	lower.SetPlaceHolder("消息字母")
 
 	rows := container.NewGridWithRows(1,
-		container.NewGridWithColumns(2, input, show),
+		container.NewGridWithColumns(2, lower, upper),
 	)
 
 	return container.NewStack(rows)
