@@ -28,6 +28,7 @@ var (
 			{Title: "UrlEncode", Intro: "UrlEncode", View: page2.UrlEncodePage},
 			{Title: "时间转化", Intro: "TimePage", View: page2.TimePage},
 			{Title: "Json2yaml", Intro: "Json2yaml", View: page2.Json2yaml},
+			{Title: "Json2yaml22", Intro: "Json2yaml22", View: page2.DataBindPage},
 			{Title: "unicode转中文", Intro: "unicode转中文", View: page2.UnicodePage},
 			{Title: "驼峰转下滑线", Intro: "Camel2snake", View: page2.Camel2snake},
 			{Title: "Base64Decode", Intro: "Base64Page", View: page2.Base64Page},

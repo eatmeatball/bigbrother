@@ -4,15 +4,19 @@ import (
 	"encoding/json"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/spf13/cast"
 )
 
 func JwtParsePage(w fyne.Window) fyne.CanvasObject {
+	initData := `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEwLCJCdWZmZXJUaW1lIjo4NjQwMCwiaXNzIjoidGhoIiwiZXhwIjoxNjYwNzM0OTMwLCJuYmYiOjE2NjAxMzAxMzB9.tnTQYaaM7FfJhah9veVNS0OSkh1q4hKtP1UUUgESCQY`
+	bindData := binding.BindString(&initData)
+	showData := widget.NewMultiLineEntry()
+	showData.Wrapping = fyne.TextWrapBreak
+	showData.Bind(bindData)
 
-	show := widget.NewMultiLineEntry()
-	show.Wrapping = fyne.TextWrapBreak
 	//show.Disable()
 	input := widget.NewMultiLineEntry()
 	input.Wrapping = fyne.TextWrapBreak
@@ -32,22 +36,21 @@ func JwtParsePage(w fyne.Window) fyne.CanvasObject {
 		//}
 
 		if token == nil || token.Claims == nil {
-			show.SetText("无法解析")
+			bindData.Set("无法解析")
 			return
 		}
 
 		//data, _ := json.Marshal(token.Claims)
 		data, _ := json.MarshalIndent(token.Claims, "", "  ")
-		result := cast.ToString(data)
-		show.SetText(result)
+		bindData.Set(cast.ToString(data))
 	}
 
 	input.SetText(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEwLCJCdWZmZXJUaW1lIjo4NjQwMCwiaXNzIjoidGhoIiwiZXhwIjoxNjYwNzM0OTMwLCJuYmYiOjE2NjAxMzAxMzB9.tnTQYaaM7FfJhah9veVNS0OSkh1q4hKtP1UUUgESCQY`)
 	v := container.NewVSplit(
 		input,
-		show,
+		showData,
 	)
 	v.Offset = 0.5
-	return container.NewMax(v)
+	return container.NewStack(v)
 
 }

@@ -24,6 +24,6 @@ func UnicodePage(w fyne.Window) fyne.CanvasObject {
 		show,
 	)
 	v.Offset = 0.5
-	return container.NewMax(v)
+	return container.NewStack(v)
 
 }

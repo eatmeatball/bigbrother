@@ -22,7 +22,7 @@ func TimePage(w fyne.Window) fyne.CanvasObject {
 	})
 	page := container.NewVBox(t1, t2,
 		widget.NewSeparator(), getNowTime())
-	return container.NewMax(page)
+	return container.NewStack(page)
 
 }
 

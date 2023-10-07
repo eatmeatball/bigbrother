@@ -31,6 +31,6 @@ TypeList
 		container.NewGridWithColumns(2, input, show),
 	)
 
-	return container.NewMax(rows)
+	return container.NewStack(rows)
 
 }

@@ -41,7 +41,7 @@ func ClockPage(_ fyne.Window) fyne.CanvasObject {
 	card := widget.NewCard("", "", c)
 
 	rectangles := canvas.NewRectangle(color.RGBA{R: 49, G: 48, B: 66})
-	tmp := container.NewMax(
+	tmp := container.NewStack(
 		container.NewVBox(head, card),
 		rectangles,
 	)

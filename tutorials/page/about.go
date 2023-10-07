@@ -13,22 +13,6 @@ func About(w fyne.Window) fyne.CanvasObject {
 
 It's a gui tool with go.
 
----
-
-* Item1 in _three_ segments
-* Item2
-* Item3
----
-
-* Item1 in _three_ segments
-* Item2
-* Item3
----
-
-* Item1 in _three_ segments
-* Item2
-* Item3
-
 `
 	about := widget.NewRichTextFromMarkdown(text)
 	about.Wrapping = fyne.TextWrapWord

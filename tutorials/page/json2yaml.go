@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 	"github.com/spf13/cast"
 	"gopkg.in/yaml.v3"
@@ -48,6 +49,30 @@ func Json2yaml(w fyne.Window) fyne.CanvasObject {
 		container.NewGridWithColumns(2, input, show),
 	)
 
-	return container.NewMax(rows)
+	return container.NewStack(rows)
 
+}
+
+func DataBindPage(w fyne.Window) fyne.CanvasObject {
+
+	oData := ""
+	bindData := binding.BindString(&oData)
+
+	input := widget.NewMultiLineEntry()
+	input.Bind(bindData)
+	input.Wrapping = fyne.TextWrapBreak
+
+	show := widget.NewMultiLineEntry()
+	show.Bind(bindData)
+	show.Wrapping = fyne.TextWrapBreak
+
+	//show.Disable()
+
+	input.SetPlaceHolder("输入json")
+
+	rows := container.NewGridWithRows(1,
+		container.NewGridWithColumns(2, input, show),
+	)
+
+	return container.NewStack(rows)
 }
